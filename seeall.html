@@ -1,0 +1,183 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            font-size: 15px;
+            outline: none;
+        }
+        .a1{
+            font-size: 20px;
+        }
+    </style>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+      
+      
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+           https://firebase.google.com/docs/web/setup#available-libraries -->
+      
+      <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBqhnfev_g7pTPBQrSU_edS_7aRR9uahUM",
+        authDomain: "fitindia-db264.firebaseapp.com",
+        projectId: "fitindia-db264",
+        storageBucket: "fitindia-db264.appspot.com",
+        messagingSenderId: "838195613634",
+        appId: "1:838195613634:web:574fc50f2eea79f322905b"
+      };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+      </script>
+ </head>
+   
+</head>
+<body onload="loadque()">
+<h1 style="text-align:center;color:white;background:blueviolet;padding: 5px;margin: -8px;font-size: 28.5px;">Your Quiz Questions</h1>
+<br>
+<input id="search" placeholder="Search Question" style="width: 85%;border:2px solid black;font-size: 20px;">
+
+<button style="width: 13.5%;border:2px solid black;font-size: 17px;" onclick="searchq()">🔍</button>
+
+<div style="margin-top: 10px;"></div>
+
+<label style="font-size: 22.5px;font-weight: 700;">Time: </label>
+<select  style="font-size: 17.5px;font-weight: 500;" name="" id="time" onchange=searchq()>
+    <option value="Newest">Newest</option>
+    <option value="Oldest">Oldest</option>
+</select>
+
+<div style="margin-top: 10px;"></div>
+
+<label style="font-size: 22.5px;font-weight: 700;">Difficulty: </label>
+<select  style="font-size: 17.5px;font-weight:500;" name="" id="diff" onchange=searchq()>
+    <option value="All">All</option>
+    <option value="Easy">Easy</option>
+    <option value="Medium">Medium</option>
+    <option value="Difficult">Difficult</option>
+
+</select>
+<br><br>
+
+<div id="quest">
+
+</div>
+
+<script>
+    function loadque(){
+main = document.getElementById("quest");
+quest=localStorage.getItem("ques");
+for(var i = quest; i>=1;i--){
+ques = localStorage.getItem("Q"+i);
+o1 = localStorage.getItem("Q"+i+"o1");
+o2 = localStorage.getItem("Q"+i+"o2");
+o3 = localStorage.getItem("Q"+i+"o3");
+o4 = localStorage.getItem("Q"+i+"o4");
+co = localStorage.getItem("Q"+i+"co");
+type = localStorage.getItem("Q"+i+"type");
+valid = localStorage.getItem("Q"+i+"valid");
+
+if(type==="Easy"){
+    type="#4c9a2a"
+}
+else if(type==="Medium"){
+    type="orange"
+}
+else if(type==="Difficult"){
+    type="red"
+}
+if(valid==='true'){
+main.innerHTML+="<div style='border:5px solid "+type+";border-radius:20px;padding-left:10px;padding-right:10px;padding-bottom:10px'>"+"<h2>"+i+") "+ques+"</h2> <label style='margin-top:-42.5px;color:red;float:right;font-size:17.5px;margin-right:10px;'onclick=deleteq("+i+")>Delete</label>"+"1) "+o1+"<br>2) "+o2+"<br>3) "+o3+"<br>4) "+o4+"<br><br>"+"<details><summary>See Answer</summary><p style=margin:0px>Option "+co+"</p></details>"+"</div><br>"
+}
+}
+}
+
+function searchq(){
+main = document.getElementById("quest");
+quest = localStorage.getItem("ques");
+query = document.getElementById("search").value;
+diff = document.getElementById("diff").value;
+time = document.getElementById("time").value;
+
+main.innerHTML="";
+if(time==="Newest"){
+for(var i = quest; i>=1;i--){
+ques = localStorage.getItem("Q"+i);
+o1 = localStorage.getItem("Q"+i+"o1");
+o2 = localStorage.getItem("Q"+i+"o2");
+o3 = localStorage.getItem("Q"+i+"o3");
+o4 = localStorage.getItem("Q"+i+"o4");
+co = localStorage.getItem("Q"+i+"co");
+type = localStorage.getItem("Q"+i+"type");
+valid = localStorage.getItem("Q"+i+"valid");
+
+
+if(ques.toLowerCase().includes(query.toLowerCase())&&valid==='true')
+if(type===diff||diff==="All"){
+if(type==="Easy"){
+    type="#4c9a2a"
+}
+else if(type==="Medium"){
+    type="orange"
+}
+else if(type==="Difficult"){
+    type="red"
+}
+
+main.innerHTML+="<div style='border:5px solid "+type+";border-radius:20px;padding-left:10px;padding-right:10px;padding-bottom:10px'>"+"<h2>"+i+") "+ques+"</h2> <label style='color:red;float:right;margin-right:10px;' onclick=deleteq("+i+")>Delete</label>"+"1) "+o1+"<br>2) "+o2+"<br>3) "+o3+"<br>4) "+o4+"<br><br>"+"<details><summary>See Answer</summary><p style=margin:0px>Option "+co+"</p></details>"+"</div><br>"
+console.log(main.innerHTML)
+}
+}
+}
+
+else if(time==="Oldest"){
+for(var i = 1; i<=quest;i++){
+ques = localStorage.getItem("Q"+i);
+o1 = localStorage.getItem("Q"+i+"o1");
+o2 = localStorage.getItem("Q"+i+"o2");
+o3 = localStorage.getItem("Q"+i+"o3");
+o4 = localStorage.getItem("Q"+i+"o4");
+co = localStorage.getItem("Q"+i+"co");
+type = localStorage.getItem("Q"+i+"type");
+valid = localStorage.getItem("Q"+i+"valid");
+
+
+if(ques.toLowerCase().includes(query.toLowerCase())&&valid==='true')
+if(type===diff||diff==="All"){
+if(type==="Easy"){
+    type="#4c9a2a"
+}
+else if(type==="Medium"){
+    type="orange"
+}
+else if(type==="Difficult"){
+    type="red"
+}
+
+main.innerHTML+="<div style='border:5px solid "+type+";border-radius:20px;padding-left:10px;padding-right:10px;padding-bottom:10px'>"+"<h2>"+i+") "+ques+"</h2> <label style='color:red;float:right;margin-right:10px;' oclick=deleteq("+i+")>Delete</label>"+"1) "+o1+"<br>2) "+o2+"<br>3) "+o3+"<br>4) "+o4+"<br><br>"+"<details><summary>See Answer</summary><p style=margin:0px>Option "+co+"</p></details>"+"</div><br>"
+console.log(main.innerHTML)
+}
+}
+}
+console.log(diff)
+}
+function deleteq(n){
+
+sure = confirm("Would You Like to Delete Question No. "+n+" ?");
+if(sure){
+    vques = localStorage.getItem("vques");
+    vques--
+    localStorage.setItem("vques",false);
+    localStorage.setItem("Q"+n+"valid",false);
+
+    searchq()
+}
+}
+</script>
+</body>
+</html>

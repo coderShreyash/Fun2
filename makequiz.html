@@ -1,0 +1,138 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            font-size: 15px;
+            outline: none;
+        }
+        .a1{
+            font-size: 20px;
+        }
+    </style>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+      
+      
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+           https://firebase.google.com/docs/web/setup#available-libraries -->
+      
+      <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBqhnfev_g7pTPBQrSU_edS_7aRR9uahUM",
+        authDomain: "fitindia-db264.firebaseapp.com",
+        projectId: "fitindia-db264",
+        storageBucket: "fitindia-db264.appspot.com",
+        messagingSenderId: "838195613634",
+        appId: "1:838195613634:web:574fc50f2eea79f322905b"
+      };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+      </script>
+ </head>
+   
+</head>
+<body>
+<h1 style="text-align:center;color:white;background:blueviolet;padding: 5px;margin: -8px;font-size: 28.5px;">Make Quiz Questions</h1>
+    <br>
+    <input class="a1" style="margin-top:10px;border: none;border-bottom:5px dotted black; width: 100%;" type="text" id="ques" placeholder="Type Your Question"><br><br>
+    <label for="">1)</label><input style="margin-left:5px;border: none;border-bottom:5px dotted black;" type="text" id="o1" placeholder="Option 1"><br><br>
+    <label for="">2)</label><input style="margin-left:5px;border: none;border-bottom:5px dotted black;" type="text" id="o2" placeholder="Option 2"><br><br>
+    <label for="">3)</label><input style="margin-left:5px;border: none;border-bottom:5px dotted black;" type="text" id="o3" placeholder="Option 3"><br><br>
+    <label for="">4)</label><input style="margin-left:5px;border: none;border-bottom:5px dotted black;" type="text" id="o4" placeholder="Option 4"><br><br>
+    <label for="">Select correct option: </label>
+    <select id="co">
+<option value="1">Option 1</option>
+<option value="2">Option 2</option>
+<option value="3">Option 3</option>
+<option value="4">Option 4</option>
+
+</select><br><br>
+<label for="">Select Difficulty:</label> <select id="type">
+    <option value="Easy">Easy</option>
+    <option value="Medium">Medium</option>
+    <option value="Difficult">Difficult</option>
+    
+    </select><br><br>
+<button style="color: white;font-size: 25px;border:2.5px solid black;background:#4166f5;border-radius: 20px;font-family:helevetica;padding: 5px;padding-left: 10px;padding-right:10px;" onclick="addque()">Add Question</button><br><br>
+<button style="color: white;font-size: 25px;border:1px solid black;background:cornflowerblue;border-radius: 20px;font-family:helevetica;padding: 4px;padding-left: 10px;padding-right:10px;" onclick="window.close()">🔙 Back</button>
+<script>
+    var database = firebase.database();
+    Name = localStorage.getItem("name");
+    Class = localStorage.getItem("class");
+    id = localStorage.getItem("id");
+    var quest;
+    var o1;
+    var o2;
+    var o3;
+    var o4;
+    var co;
+    var type;
+
+    function addque(){
+    ques = localStorage.getItem("ques");
+
+        quest = document.getElementById("ques").value;
+        o1 = document.getElementById("o1").value;
+        o2 = document.getElementById("o2").value;
+        o3 = document.getElementById("o3").value;
+        o4 = document.getElementById("o4").value;
+        co = document.getElementById("co").value;
+        type = document.getElementById("type").value;
+
+       
+        if(quest.replaceAll(" ","")===""){
+            alert("Please Enter The Question.");
+            document.getElementById("ques").focus();
+        }
+
+        else if(o1.replaceAll(" ","")===""){
+            alert("Please Enter Option 1.");
+       document.getElementById("o1").focus();
+        }
+
+        else if(o2.replaceAll(" ","")===""){
+            alert("Please Enter Option 2.");
+       document.getElementById("o2").focus();
+        }
+    
+        else if(o3.replaceAll(" ","")===""){
+            alert("Please Enter Option 3.");
+       document.getElementById("o3").focus();
+        }
+
+        else if(o4.replaceAll(" ","")===""){
+            alert("Please Enter Option 4.");
+       document.getElementById("o4").focus();
+        }
+        else{
+            vques=localStorage.getItem("vques");
+            if(!vques){
+                vques===0;
+            }
+            vques++;
+            ques++;
+            localStorage.setItem("ques",ques);
+            localStorage.setItem("vques",vques);
+
+            localStorage.setItem("Q"+ques,quest);
+            localStorage.setItem("Q"+ques+"o1",o1);
+            localStorage.setItem("Q"+ques+"o2",o2);
+            localStorage.setItem("Q"+ques+"o3",o3);
+            localStorage.setItem("Q"+ques+"o4",o4);
+            localStorage.setItem("Q"+ques+"co",co);
+            localStorage.setItem("Q"+ques+"type",type);
+            localStorage.setItem("Q"+ques+"valid",true);
+
+            alert("Question Added Successfully.");
+        }
+        
+    }
+</script>
+</body>
+</html>

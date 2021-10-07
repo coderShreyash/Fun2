@@ -1,0 +1,133 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            font-size: 15px;
+            outline: none;
+        }
+        .a1{
+            font-size: 20px;
+        }
+    </style>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+      
+      
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+           https://firebase.google.com/docs/web/setup#available-libraries -->
+      
+      <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBqhnfev_g7pTPBQrSU_edS_7aRR9uahUM",
+        authDomain: "fitindia-db264.firebaseapp.com",
+        projectId: "fitindia-db264",
+        storageBucket: "fitindia-db264.appspot.com",
+        messagingSenderId: "838195613634",
+        appId: "1:838195613634:web:574fc50f2eea79f322905b"
+      };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+      </script>
+ </head>
+   
+</head>
+<body>
+<h1 style="text-align:center;color:white;background:blueviolet;padding: 5px;margin: -8px;font-size: 28.5px;">Timed Quiz Details</h1>
+<h2>Enter Time Quiz Details:</h2>
+<label>Number Of Questions: </label> <input type="number" id="noq" style="width: 50px;margin-right: 10px;"  onchange="checknoq()"><br><br>
+<label><label style="color:red;font-family:calibri;"> Note:</label><label> Number Of Questions can't be more than the ones that you have created (excluding the deleted ones).</label></label>
+<br><br>
+
+<label>Enter Duration: </label> <input type="number" id="dur" style="width: 50px;margin-right: 10px;" max="60" onchange="checkdu()"><label for="">Mins</label><br><br>
+<label><label style="color:red;font-family:calibri;"> Note:</label><label> Can't be more than 60.</label></label>
+<br><br>
+
+<label>Select Difficulty: </label> 
+<select id="diff">
+    <option value="All">All</option>
+    <option value="Easy">Easy</option>
+    <option value="Medium">Medium
+    </option>
+    <option value="Difficult">Difficult</option>
+</select><br><br>
+
+<label>Select Order: </label> 
+
+<select id="ord">
+    <option value="Random">Random</option>
+    <option value="Newest">From Newest</option>
+    <option value="Oldest">From Oldest
+    </option>
+</select><br>
+<button style="margin-top:10px;color: white;font-size: 25px;border:2.5px solid black;background:linear-gradient(to bottom right,blueviolet,indigo);font-family:helevetica;margin-left: 5px;" onclick="rest()">Reset</button><br>
+<button style="margin-top:10px;color: white;font-size: 25px;border:2.5px solid black;background:#4166f5;border-radius: 20px;font-family:helevetica;padding: 5px;padding-left: 10px;padding-right:10px;" onclick="tquiz()">Start Timed Quiz ⌚</button>
+
+<script>
+    function checkdu(){
+    dura=document.getElementById("dur").value;
+    valq = localStorage.getItem("vques");
+    if(parseInt(dura)>60){
+        document.getElementById("dur").value=60;
+    }
+    }
+
+    function checknoq(){
+    noq=document.getElementById("noq").value;
+    valq = localStorage.getItem("vques");
+    if(parseInt(noq)>parseInt(valq)){
+        document.getElementById("noq").value=valq;
+    }
+    }
+    function rest(){
+        document.getElementById("dur").value='';
+        document.getElementById("noq").value='';
+        document.getElementById("ord").value='Random';
+        document.getElementById("diff").value='All';
+
+
+
+    }
+
+    function tquiz(){
+    noq=document.getElementById("noq").value;
+    dura=document.getElementById("dur").value;
+    ord=document.getElementById("ord").value;
+    dif=document.getElementById("diff").value;
+
+    if(noq===''){
+        alert("Please Enter Number Of Questions.")
+        document.getElementById("noq").focus();
+    }
+
+    else if(dura===''){
+        alert("Please Enter Duration Of Timed Test.")
+        document.getElementById("dur").focus();
+    }
+    else{
+        surity=confirm("Would you like to start Timed Quiz with:\nNumber of Questions = "+noq+"\nDuration = "+dura);
+        if(surity){
+            qs = parseInt(localStorage.getItem("qs"));
+            if(!qs){localStorage.setItem("qs",0);}
+            qs++;
+            a = new Date();
+            localStorage.setItem("qs",qs);
+            localStorage.setItem("Quiz"+qs+"noq",noq);
+            localStorage.setItem("Quiz"+qs+"dura",dura);
+            localStorage.setItem("Quiz"+qs+"ord",ord);
+            localStorage.setItem("Quiz"+qs+"dif",dif);
+            localStorage.setItem("Quiz"+qs+"date",a.toString().slice(0,15));
+            localStorage.setItem("Quiz"+qs+"time",a.toString().slice(16,24));
+
+            window.open("playtquiz.html?"+qs+"&"+noq+"&"+dura+"&"+ord+"&"+dif);
+        }
+    }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            font-size: 15px;
+            outline: none;
+        }
+        .a1{
+            font-size: 20px;
+        }
+    </style>
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+      
+      
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+           https://firebase.google.com/docs/web/setup#available-libraries -->
+      
+      <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBqhnfev_g7pTPBQrSU_edS_7aRR9uahUM",
+        authDomain: "fitindia-db264.firebaseapp.com",
+        projectId: "fitindia-db264",
+        storageBucket: "fitindia-db264.appspot.com",
+        messagingSenderId: "838195613634",
+        appId: "1:838195613634:web:574fc50f2eea79f322905b"
+      };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+      </script>
+ </head>
+   
+</head>
+<body onload="loadque()">
+<h1 style="text-align:center;color:white;background:blueviolet;padding: 5px;margin: -8px;font-size: 28.5px;">Your Quiz Questions</h1>
+<br>
+
+
+<div id="quest">
+
+</div>
+
+<script>
+    function loadque(){
+main = document.getElementById("quest");
+quest=localStorage.getItem("vques");
+inputq = [];
+outq = [];
+for(var i = 1; i <= quest; i++ ){
+inputq[(i-1)]=i
+}
+for(var i = 1; i <= quest; i++ ){
+    numb=Math.floor(Math.random()*inputq.length);
+    for(var i = 0;!outq.includes(inputq[numb]);i++)
+    {
+        if(outq.includes(inputq[numb])){
+    numb=Math.floor(Math.random()*inputq.length);
+    }
+    else{
+        break;
+    }
+}
+outq[(i-1)] = inputq[numb]
+inputq.pop(numb)
+
+console.log(numb)
+
+
+}
+for(var i = quest; i>=1;i--){
+ques = localStorage.getItem("Q"+i);
+o1 = localStorage.getItem("Q"+i+"o1");
+o2 = localStorage.getItem("Q"+i+"o2");
+o3 = localStorage.getItem("Q"+i+"o3");
+o4 = localStorage.getItem("Q"+i+"o4");
+co = localStorage.getItem("Q"+i+"co");
+type = localStorage.getItem("Q"+i+"type");
+if(type==="Easy"){
+    type="#4c9a2a"
+}
+else if(type==="Medium"){
+    type="orange"
+}
+else if(type==="Difficult"){
+    type="red"
+}
+main.innerHTML+="<div style='border:5px solid "+type+";border-radius:20px;padding-left:10px;padding-right:10px;padding-bottom:0px'>"+"<h2>"+i+") "+ques+"</h2>"+"<input type=radio name='"+i+"'>"+o1+"<br><input type=radio name='"+i+"'>"+o2+"<br><input type=radio name='"+i+"'>"+o3+"<br><input type=radio name='"+i+"'>"+o4+"<br><br></div><br>"
+}
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fit India Quiz
+    </title>
+    <style>
+        body{
+            background:url("back.jpg");
+            background-size: cover;
+        }
+.conta{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.conta .data{
+    text-align: center;
+}
+.conta label,input,select{
+    font-size: large;
+    font-weight: bold;
+    height: 35px;
+    text-align: center;
+
+ }
+ .conta label{
+    text-align: center;
+    font-size: 25px;
+    color: white;
+    text-shadow: -2.5px -2.5px 5px black;
+
+ }
+ .conta .text{
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom:20px ;
+    margin-top:20px ;
+    font-family: helvetica;
+    text-align: center;
+    text-align: center;
+    color: white;
+    text-shadow: 2.5px 2.5px 5px black;
+
+ }
+ .conta input{
+     margin-bottom: 20px;
+     border: 2px solid black;
+
+ }
+ .conta button{
+     padding:5px;
+     padding-right:10px;
+     padding-left:10px;
+
+
+     font-size: x-large;
+     font-weight: bold;
+     border: 3px solid black;
+     border-radius:5px;
+     background:linear-gradient(to bottom right,#0091ff,blueviolet);
+     text-align: center;
+     color: white;
+    text-shadow: 2.5px 2.5px 5px black;
+    transition: 500ms;
+
+ }
+ .conta button:hover
+ { 
+    background:linear-gradient(to bottom right,blueviolet,#0091ff);
+ }
+ .conta .btn
+ {
+     text-align: center;
+ }
+.centre
+{
+  
+    text-align: center;
+}
+@media screen and (max-width:500px) {
+    .centre
+{
+   
+    text-align: center;
+}
+}
+
+    </style>
+    <script>
+        function onloadd(){
+            id = localStorage.getItem("name");
+           if(id==null||id=="null"){
+            document.getElementById("main").style.display= "none";
+            document.getElementById("form").style.display= "block";
+
+           }
+           else{
+            document.getElementById("id").innerHTML=id;
+
+           }
+
+        }
+    </script>
+     <!-- The core Firebase JS SDK is always required and must be listed first -->
+     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+     
+     
+     <!-- TODO: Add SDKs for Firebase products that you want to use
+          https://firebase.google.com/docs/web/setup#available-libraries -->
+     
+     <script>
+       // Your web app's Firebase configuration
+       var firebaseConfig = {
+           apiKey: "AIzaSyBqhnfev_g7pTPBQrSU_edS_7aRR9uahUM",
+       authDomain: "fitindia-db264.firebaseapp.com",
+       projectId: "fitindia-db264",
+       storageBucket: "fitindia-db264.appspot.com",
+       messagingSenderId: "838195613634",
+       appId: "1:838195613634:web:574fc50f2eea79f322905b"
+     };
+       // Initialize Firebase
+       firebase.initializeApp(firebaseConfig);
+     </script>
+</head>
+<body onload="onloadd()">
+
+    <!--Main-->
+
+    <div id="main">
+<h1 style="text-align:center;color:white;background:blueviolet;padding: 5px;margin: -8px;">Fit India Quiz</h1>
+    <h2 style="margin-top:30px;text-align:center;color: white;text-shadow: 2px 2px 5px black;">Hello Dear, <label id="id"></label></h2>
+    <h2 style="margin-top:-10px;text-align:center;color: white;text-shadow: 2px 2px 5px black;">Let's Start Practicing</h2>
+<br>
+<div class="centre">
+    <button style="color: white;font-size: 25px;border:2.5px solid black;background:#1167b1;border-radius: 20px;font-family:helevetica;padding: 5px;padding-left:10px;padding-right:10px;text-shadow: 2.5px 2.5px 5px black;" onclick="window.open('play.html')">
+        Play Your Quiz</button><br><br>
+    <button style="color: white;font-size: 25px;border:2.5px solid black;background:#4166f5;border-radius: 20px;font-family:helevetica;padding: 5px;padding-left:10px;padding-right:10px;text-shadow: 2.5px 2.5px 5px black;" onclick="window.open('makequiz.html')">
+        Make Quiz Questions</button><br><br>
+    <button style="color: white;font-size: 25px;border:2.5px solid black;background:rgb(0, 128, 255);border-radius: 40px;font-family:helevetica;padding: 5px;padding-left:20px;padding-right:20px;text-shadow: 2.5px 2.5px 5px black;">
+        See and Share Important <br> ⭐ Questions ⭐</button><br><br>
+
+        <button style="color: white;font-size: 25px;border:2.5px solid black;background:linear-gradient(orange,red);border-radius: 40px;font-family:helevetica;padding: 5px;padding-left:20px;padding-right:20px;text-shadow: 2.5px 2.5px 5px black;">
+        How To Use</button>
+</div>
+</div>
+
+    <!--Form-->
+
+  
+    <div id="form" class="conta" style="display: none;">
+
+        <div class="text">Sign Up Form</div>
+        <form id="myForm" onsubmit="submitData()">
+            <div class="data ss-item-required">
+                <label for="name">Enter Name: </label><br><br>
+            <input autocomplete=none type="text" id="name" placeholder="Enter Your Name" maxlength="15">
+            
+            </div>
+           
+            <div class="data ss-item-required">
+                <label for="pass">Choose Class: </label><br><br>
+                <select id="cc">
+                    <option value="8">Class 8</option>
+                    <option value="9">Class 9</option>
+                    <option value="11">Class 11</option>
+
+                </select>
+              <br><br>
+            </div>
+            
+           <div class="btn">
+            <button type="submit">Sign up</button>
+        </div>
+        </form>
+    </div>
+
+    <script>
+        database=firebase.database();
+        var users;
+        database.ref("Users/users").on("value",function(data){
+            users = data.val();
+        })
+
+        function submitData(){
+            event.preventDefault();
+            Name = document.getElementById("name").value;
+            Class = document.getElementById("cc").value;
+            if(Name.replaceAll(" ","") === ""){
+                alert("Please Enter Your Name");
+            } 
+            else if(Class.replaceAll(" ","") === ""){
+                alert("Please Enter Your Name");
+            }
+            else
+            {
+            database.ref("Users/users").on("value",function(data){
+            users = data.val();
+        })
+
+            users++;
+
+            a = new Date();
+            time = a.getTime();
+            database.ref("Users/").set({
+                users: users
+            })
+
+            database.ref("User/"+time).set({
+                Name:Name,
+                Class:Class
+            })
+
+            localStorage.setItem("id",time);
+            localStorage.setItem("name",Name);
+            localStorage.setItem("class",Class);
+location.reload();
+            }
+        }
+    </script>
+
+</body>
+</html>
